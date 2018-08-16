@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, ToastController, AlertController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 
 declare var google;
@@ -13,7 +13,8 @@ export class HomePage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public geolocation: Geolocation,
+              public toastCtrl: ToastController, public alertCtrl: AlertController) {
 
   }
 
@@ -49,18 +50,41 @@ export class HomePage {
 
   }
 
-  addMarker(coords?, title?, info?) {
+  openAddMarker() {
 
-    let marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      position: (coords) ? coords : this.map.getCenter()
+    let prompt = this.alertCtrl.create({
+      title: 'Para onde vamos?',
+      message: 'Insira o endereço que deseja procurar:',
+      inputs: [
+        {
+          name: 'address',
+          placeholder: 'Rua Amazonas, 123, Jaguariúna - SP'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: data => {
+            console.log('Cancelou: ' + data.address);            
+          }
+        },
+        {
+          text: 'Ir',
+          handler: data => {
+            this.addMarker(data.address);
+          }
+        }
+      ]
+      
     });
 
-    if (title && info) {
-      let content = "<h5>" + title + "</h5><p>" + info + "</p>";
-      this.addInfoWindow(marker, content);
-    }
+    prompt.present();
+
+  }
+
+  addMarker(address) {
+
+    // REDO
 
   }
 
