@@ -40,6 +40,7 @@ ionic serve
 ## Autor
 
 **Guilherme Dimas** - *Trabalho inicial* - [GuiDimas](https://github.com/GuiDimas)
+**Fábio Barbosa** - *Trabalho inicial* - [Orbtz](https://github.com/orbtz)
 
 ## Notas
 
